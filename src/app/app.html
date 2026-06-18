@@ -1,1 +1,39 @@
-<router-outlet></router-outlet>
+<div style="max-width: 420px; margin: 50px auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 25px; border: 1px solid #e0e0e0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); background: #ffffff;">
+  
+  <h2 style="text-align: center; color: #1a73e8; margin-top: 0;">ATM - Cajero Automático</h2>
+  
+  <div *ngIf="account; else loading" style="background: #f8f9fa; padding: 15px; margin-bottom: 25px; border-radius: 8px; border-left: 5px solid #1a73e8;">
+    <p style="margin: 0 0 8px 0; color: #5f6368;"><strong>N° Cuenta:</strong> {{ account.accountNumber }}</p>
+    <p style="margin: 0; font-size: 1.2rem; color: #202124;"><strong>Saldo:</strong> <span style="color: #2ec4b6; font-weight: bold;">${{ account.balance }}</span></p>
+  </div>
+
+  <ng-template #loading>
+    <p style="text-align: center; color: #5f6368;">Cargando datos de la cuenta...</p>
+  </ng-template>
+
+  <div style="background: #ffffff; border: 1px solid #f1f3f4; padding: 15px; border-radius: 8px;">
+    <h3 style="margin-top: 0; font-size: 1rem; color: #202124; border-bottom: 1px solid #f1f3f4; padding-bottom: 8px;">Nueva Operación</h3>
+    
+    <div style="margin-bottom: 15px;">
+      <label style="display: block; font-size: 0.85rem; color: #5f6368; margin-bottom: 5px;">Tipo de Transacción:</label>
+      <select [(ngModel)]="type" style="width: 100%; padding: 10px; border: 1px solid #dadce0; border-radius: 4px; background: #fff; font-size: 0.95rem;">
+        <option value="DEPOSIT">Depósito (+)</option>
+        <option value="WITHDRAWAL">Retiro (-)</option>
+      </select>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <label style="display: block; font-size: 0.85rem; color: #5f6368; margin-bottom: 5px;">Monto:</label>
+      <input type="number" [(ngModel)]="amount" min="0" placeholder="0.00" style="width: 100%; padding: 10px; border: 1px solid #dadce0; border-radius: 4px; box-sizing: border-box; font-size: 0.95rem;" />
+    </div>
+
+    <button (click)="sendTransaction()" style="width: 100%; padding: 12px; background: #1a73e8; color: white; border: none; border-radius: 4px; font-size: 1rem; font-weight: bold; cursor: pointer;">
+      Ejecutar Operación
+    </button>
+  </div>
+
+  <div *ngIf="message" [style.background]="isError ? '#fce8e6' : '#e6f4ea'" [style.color]="isError ? '#c5221f' : '#137333'" style="margin-top: 20px; padding: 12px; border-radius: 6px; font-size: 0.9rem; font-weight: 500; text-align: center;">
+    {{ message }}
+  </div>
+
+</div>
